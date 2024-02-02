@@ -1,0 +1,15 @@
+version: 2
+spec:
+  environment: default
+  mode: replace
+  supergraph:
+    resources:
+    - supergraph/*
+  subgraphs:
+  - name: default
+    resources:
+    - subgraphs/default/**/*.hml
+    connectors:
+      pg_db:
+        path: subgraphs/default/dataconnectors/pg_db
+        connectorConfigFile: pg_db.hml

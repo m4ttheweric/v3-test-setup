@@ -1,0 +1,13 @@
+kind: HasuraHubDataConnector
+version: v1
+definition:
+  name: pg_db
+  connectorId: hasura/postgres
+  connectorConfiguration:
+    - region: gcp-us-west2
+      mode: ReadOnly
+      configuration:
+        version: 1
+        connectionUri:
+          uri:
+            stringValueFromSecret: PG_DB_URL
