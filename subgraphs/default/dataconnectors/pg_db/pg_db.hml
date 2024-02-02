@@ -4,10 +4,831 @@ definition:
   name: pg_db
   connectorId: hasura/postgres
   connectorConfiguration:
-    - region: gcp-us-west2
-      mode: ReadOnly
-      configuration:
-        version: 1
-        connectionUri:
-          uri:
-            stringValueFromSecret: PG_DB_URL
+  - region: gcp-us-west2
+    mode: ReadOnly
+    configuration:
+      version: 1
+      connectionUri:
+        uri:
+          stringValueFromSecret: PG_DB_URL
+      metadata:
+        aggregateFunctions:
+          int2:
+            avg:
+              returnType: numeric
+            bit_and:
+              returnType: int2
+            bit_or:
+              returnType: int2
+            bit_xor:
+              returnType: int2
+            max:
+              returnType: int2
+            min:
+              returnType: int2
+            stddev:
+              returnType: numeric
+            stddev_pop:
+              returnType: numeric
+            stddev_samp:
+              returnType: numeric
+            var_pop:
+              returnType: numeric
+            var_samp:
+              returnType: numeric
+            variance:
+              returnType: numeric
+          int4:
+            avg:
+              returnType: numeric
+            bit_and:
+              returnType: int4
+            bit_or:
+              returnType: int4
+            bit_xor:
+              returnType: int4
+            max:
+              returnType: int4
+            min:
+              returnType: int4
+            stddev:
+              returnType: numeric
+            stddev_pop:
+              returnType: numeric
+            stddev_samp:
+              returnType: numeric
+            var_pop:
+              returnType: numeric
+            var_samp:
+              returnType: numeric
+            variance:
+              returnType: numeric
+          numeric:
+            avg:
+              returnType: numeric
+            max:
+              returnType: numeric
+            min:
+              returnType: numeric
+            stddev:
+              returnType: numeric
+            stddev_pop:
+              returnType: numeric
+            stddev_samp:
+              returnType: numeric
+            sum:
+              returnType: numeric
+            var_pop:
+              returnType: numeric
+            var_samp:
+              returnType: numeric
+            variance:
+              returnType: numeric
+          timestamp:
+            max:
+              returnType: timestamp
+            min:
+              returnType: timestamp
+        comparisonOperators:
+          int2:
+            _eq:
+              argumentType: int2
+              operatorName: "="
+            _gt:
+              argumentType: int2
+              operatorName: ">"
+            _gte:
+              argumentType: int2
+              operatorName: ">="
+            _lt:
+              argumentType: int2
+              operatorName: <
+            _lte:
+              argumentType: int2
+              operatorName: <=
+            _neq:
+              argumentType: int2
+              operatorName: <>
+          int4:
+            _eq:
+              argumentType: int4
+              operatorName: "="
+            _gt:
+              argumentType: int4
+              operatorName: ">"
+            _gte:
+              argumentType: int4
+              operatorName: ">="
+            _lt:
+              argumentType: int4
+              operatorName: <
+            _lte:
+              argumentType: int4
+              operatorName: <=
+            _neq:
+              argumentType: int4
+              operatorName: <>
+          numeric:
+            _eq:
+              argumentType: numeric
+              operatorName: "="
+            _gt:
+              argumentType: numeric
+              operatorName: ">"
+            _gte:
+              argumentType: numeric
+              operatorName: ">="
+            _lt:
+              argumentType: numeric
+              operatorName: <
+            _lte:
+              argumentType: numeric
+              operatorName: <=
+            _neq:
+              argumentType: numeric
+              operatorName: <>
+          timestamp:
+            _eq:
+              argumentType: timestamp
+              operatorName: "="
+            _gt:
+              argumentType: timestamp
+              operatorName: ">"
+            _gte:
+              argumentType: timestamp
+              operatorName: ">="
+            _lt:
+              argumentType: timestamp
+              operatorName: <
+            _lte:
+              argumentType: timestamp
+              operatorName: <=
+            _neq:
+              argumentType: timestamp
+              operatorName: <>
+          varchar:
+            _eq:
+              argumentType: varchar
+              operatorName: "="
+            _gt:
+              argumentType: varchar
+              operatorName: ">"
+            _gte:
+              argumentType: varchar
+              operatorName: ">="
+            _ilike:
+              argumentType: varchar
+              operatorName: "~~*"
+            _iregex:
+              argumentType: varchar
+              operatorName: "~*"
+            _like:
+              argumentType: varchar
+              operatorName: "~~"
+            _lt:
+              argumentType: varchar
+              operatorName: <
+            _lte:
+              argumentType: varchar
+              operatorName: <=
+            _neq:
+              argumentType: varchar
+              operatorName: <>
+            _nilike:
+              argumentType: varchar
+              operatorName: "!~~*"
+            _niregex:
+              argumentType: varchar
+              operatorName: "!~*"
+            _nlike:
+              argumentType: varchar
+              operatorName: "!~~"
+            _nregex:
+              argumentType: varchar
+              operatorName: "!~"
+            _regex:
+              argumentType: varchar
+              operatorName: "~"
+        nativeQueries: {}
+        tables:
+          actor:
+            columns:
+              actor_id:
+                description: null
+                name: actor_id
+                nullable: nonNullable
+                type: int4
+              first_name:
+                description: null
+                name: first_name
+                nullable: nonNullable
+                type: varchar
+              last_name:
+                description: null
+                name: last_name
+                nullable: nonNullable
+                type: varchar
+              last_update:
+                description: null
+                name: last_update
+                nullable: nonNullable
+                type: timestamp
+            description: null
+            foreignRelations: {}
+            schemaName: public
+            tableName: actor
+            uniquenessConstraints: {}
+          album:
+            columns:
+              album_id:
+                description: null
+                name: album_id
+                nullable: nonNullable
+                type: int4
+              artist_id:
+                description: null
+                name: artist_id
+                nullable: nonNullable
+                type: int4
+              title:
+                description: null
+                name: title
+                nullable: nonNullable
+                type: varchar
+            description: null
+            foreignRelations:
+              fk_album_artist_id:
+                columnMapping:
+                  artist_id: artist_id
+                foreignSchema: public
+                foreignTable: artist
+            schemaName: public
+            tableName: album
+            uniquenessConstraints:
+              pk_album:
+              - album_id
+          artist:
+            columns:
+              artist_id:
+                description: null
+                name: artist_id
+                nullable: nonNullable
+                type: int4
+              name:
+                description: null
+                name: name
+                nullable: nullable
+                type: varchar
+            description: null
+            foreignRelations: {}
+            schemaName: public
+            tableName: artist
+            uniquenessConstraints:
+              pk_artist:
+              - artist_id
+          category:
+            columns:
+              category_id:
+                description: null
+                name: category_id
+                nullable: nonNullable
+                type: int4
+              last_update:
+                description: null
+                name: last_update
+                nullable: nonNullable
+                type: timestamp
+              name:
+                description: null
+                name: name
+                nullable: nonNullable
+                type: varchar
+            description: null
+            foreignRelations: {}
+            schemaName: public
+            tableName: category
+            uniquenessConstraints: {}
+          customer:
+            columns:
+              address:
+                description: null
+                name: address
+                nullable: nullable
+                type: varchar
+              city:
+                description: null
+                name: city
+                nullable: nullable
+                type: varchar
+              company:
+                description: null
+                name: company
+                nullable: nullable
+                type: varchar
+              country:
+                description: null
+                name: country
+                nullable: nullable
+                type: varchar
+              customer_id:
+                description: null
+                name: customer_id
+                nullable: nonNullable
+                type: int4
+              email:
+                description: null
+                name: email
+                nullable: nonNullable
+                type: varchar
+              fax:
+                description: null
+                name: fax
+                nullable: nullable
+                type: varchar
+              first_name:
+                description: null
+                name: first_name
+                nullable: nonNullable
+                type: varchar
+              last_name:
+                description: null
+                name: last_name
+                nullable: nonNullable
+                type: varchar
+              phone:
+                description: null
+                name: phone
+                nullable: nullable
+                type: varchar
+              postal_code:
+                description: null
+                name: postal_code
+                nullable: nullable
+                type: varchar
+              state:
+                description: null
+                name: state
+                nullable: nullable
+                type: varchar
+              support_rep_id:
+                description: null
+                name: support_rep_id
+                nullable: nullable
+                type: int4
+            description: null
+            foreignRelations:
+              fk_customer_support_rep_id:
+                columnMapping:
+                  support_rep_id: employee_id
+                foreignSchema: public
+                foreignTable: employee
+            schemaName: public
+            tableName: customer
+            uniquenessConstraints:
+              pk_customer:
+              - customer_id
+          employee:
+            columns:
+              address:
+                description: null
+                name: address
+                nullable: nullable
+                type: varchar
+              birth_date:
+                description: null
+                name: birth_date
+                nullable: nullable
+                type: timestamp
+              city:
+                description: null
+                name: city
+                nullable: nullable
+                type: varchar
+              country:
+                description: null
+                name: country
+                nullable: nullable
+                type: varchar
+              email:
+                description: null
+                name: email
+                nullable: nullable
+                type: varchar
+              employee_id:
+                description: null
+                name: employee_id
+                nullable: nonNullable
+                type: int4
+              fax:
+                description: null
+                name: fax
+                nullable: nullable
+                type: varchar
+              first_name:
+                description: null
+                name: first_name
+                nullable: nonNullable
+                type: varchar
+              hire_date:
+                description: null
+                name: hire_date
+                nullable: nullable
+                type: timestamp
+              last_name:
+                description: null
+                name: last_name
+                nullable: nonNullable
+                type: varchar
+              phone:
+                description: null
+                name: phone
+                nullable: nullable
+                type: varchar
+              postal_code:
+                description: null
+                name: postal_code
+                nullable: nullable
+                type: varchar
+              reports_to:
+                description: null
+                name: reports_to
+                nullable: nullable
+                type: int4
+              state:
+                description: null
+                name: state
+                nullable: nullable
+                type: varchar
+              title:
+                description: null
+                name: title
+                nullable: nullable
+                type: varchar
+            description: null
+            foreignRelations:
+              fk_employee_reports_to:
+                columnMapping:
+                  reports_to: employee_id
+                foreignSchema: public
+                foreignTable: employee
+            schemaName: public
+            tableName: employee
+            uniquenessConstraints:
+              pk_employee:
+              - employee_id
+          film_actor:
+            columns:
+              actor_id:
+                description: null
+                name: actor_id
+                nullable: nonNullable
+                type: int2
+              film_id:
+                description: null
+                name: film_id
+                nullable: nonNullable
+                type: int2
+              last_update:
+                description: null
+                name: last_update
+                nullable: nonNullable
+                type: timestamp
+            description: null
+            foreignRelations: {}
+            schemaName: public
+            tableName: film_actor
+            uniquenessConstraints: {}
+          film_category:
+            columns:
+              category_id:
+                description: null
+                name: category_id
+                nullable: nonNullable
+                type: int2
+              film_id:
+                description: null
+                name: film_id
+                nullable: nonNullable
+                type: int2
+              last_update:
+                description: null
+                name: last_update
+                nullable: nonNullable
+                type: timestamp
+            description: null
+            foreignRelations: {}
+            schemaName: public
+            tableName: film_category
+            uniquenessConstraints: {}
+          genre:
+            columns:
+              genre_id:
+                description: null
+                name: genre_id
+                nullable: nonNullable
+                type: int4
+              name:
+                description: null
+                name: name
+                nullable: nullable
+                type: varchar
+            description: null
+            foreignRelations: {}
+            schemaName: public
+            tableName: genre
+            uniquenessConstraints:
+              pk_genre:
+              - genre_id
+          invoice:
+            columns:
+              billing_address:
+                description: null
+                name: billing_address
+                nullable: nullable
+                type: varchar
+              billing_city:
+                description: null
+                name: billing_city
+                nullable: nullable
+                type: varchar
+              billing_country:
+                description: null
+                name: billing_country
+                nullable: nullable
+                type: varchar
+              billing_postal_code:
+                description: null
+                name: billing_postal_code
+                nullable: nullable
+                type: varchar
+              billing_state:
+                description: null
+                name: billing_state
+                nullable: nullable
+                type: varchar
+              customer_id:
+                description: null
+                name: customer_id
+                nullable: nonNullable
+                type: int4
+              invoice_date:
+                description: null
+                name: invoice_date
+                nullable: nonNullable
+                type: timestamp
+              invoice_id:
+                description: null
+                name: invoice_id
+                nullable: nonNullable
+                type: int4
+              total:
+                description: null
+                name: total
+                nullable: nonNullable
+                type: numeric
+            description: null
+            foreignRelations:
+              fk_invoice_customer_id:
+                columnMapping:
+                  customer_id: customer_id
+                foreignSchema: public
+                foreignTable: customer
+            schemaName: public
+            tableName: invoice
+            uniquenessConstraints:
+              pk_invoice:
+              - invoice_id
+          invoice_line:
+            columns:
+              invoice_id:
+                description: null
+                name: invoice_id
+                nullable: nonNullable
+                type: int4
+              invoice_line_id:
+                description: null
+                name: invoice_line_id
+                nullable: nonNullable
+                type: int4
+              quantity:
+                description: null
+                name: quantity
+                nullable: nonNullable
+                type: int4
+              track_id:
+                description: null
+                name: track_id
+                nullable: nonNullable
+                type: int4
+              unit_price:
+                description: null
+                name: unit_price
+                nullable: nonNullable
+                type: numeric
+            description: null
+            foreignRelations:
+              fk_invoice_line_invoice_id:
+                columnMapping:
+                  invoice_id: invoice_id
+                foreignSchema: public
+                foreignTable: invoice
+              fk_invoice_line_track_id:
+                columnMapping:
+                  track_id: track_id
+                foreignSchema: public
+                foreignTable: track
+            schemaName: public
+            tableName: invoice_line
+            uniquenessConstraints:
+              ok_invoice_line:
+              - invoice_line_id
+          media_type:
+            columns:
+              media_type_id:
+                description: null
+                name: media_type_id
+                nullable: nonNullable
+                type: int4
+              name:
+                description: null
+                name: name
+                nullable: nullable
+                type: varchar
+            description: null
+            foreignRelations: {}
+            schemaName: public
+            tableName: media_type
+            uniquenessConstraints:
+              pk_media_type:
+              - media_type_id
+          playlist:
+            columns:
+              name:
+                description: null
+                name: name
+                nullable: nullable
+                type: varchar
+              playlist_id:
+                description: null
+                name: playlist_id
+                nullable: nonNullable
+                type: int4
+            description: null
+            foreignRelations: {}
+            schemaName: public
+            tableName: playlist
+            uniquenessConstraints:
+              pk_playlist:
+              - playlist_id
+          playlist_track:
+            columns:
+              playlist_id:
+                description: null
+                name: playlist_id
+                nullable: nonNullable
+                type: int4
+              track_id:
+                description: null
+                name: track_id
+                nullable: nonNullable
+                type: int4
+            description: null
+            foreignRelations:
+              fk_playlist_track_playlist_id:
+                columnMapping:
+                  playlist_id: playlist_id
+                foreignSchema: public
+                foreignTable: playlist
+              fk_playlist_track_track_id:
+                columnMapping:
+                  track_id: track_id
+                foreignSchema: public
+                foreignTable: track
+            schemaName: public
+            tableName: playlist_track
+            uniquenessConstraints:
+              pk_playlist_track:
+              - playlist_id
+              - track_id
+          track:
+            columns:
+              album_id:
+                description: null
+                name: album_id
+                nullable: nullable
+                type: int4
+              bytes:
+                description: null
+                name: bytes
+                nullable: nullable
+                type: int4
+              composer:
+                description: null
+                name: composer
+                nullable: nullable
+                type: varchar
+              genre_id:
+                description: null
+                name: genre_id
+                nullable: nullable
+                type: int4
+              media_type_id:
+                description: null
+                name: media_type_id
+                nullable: nonNullable
+                type: int4
+              milliseconds:
+                description: null
+                name: milliseconds
+                nullable: nonNullable
+                type: int4
+              name:
+                description: null
+                name: name
+                nullable: nonNullable
+                type: varchar
+              track_id:
+                description: null
+                name: track_id
+                nullable: nonNullable
+                type: int4
+              unit_price:
+                description: null
+                name: unit_price
+                nullable: nonNullable
+                type: numeric
+            description: null
+            foreignRelations:
+              fk_track_album_id:
+                columnMapping:
+                  album_id: album_id
+                foreignSchema: public
+                foreignTable: album
+              fk_track_genre_id:
+                columnMapping:
+                  genre_id: genre_id
+                foreignSchema: public
+                foreignTable: genre
+              fk_track_media_type_id:
+                columnMapping:
+                  media_type_id: media_type_id
+                foreignSchema: public
+                foreignTable: media_type
+            schemaName: public
+            tableName: track
+            uniquenessConstraints:
+              pk_track:
+              - track_id
+      configureOptions:
+        comparisonOperatorMapping:
+        - exposedName: _eq
+          operatorName: "="
+        - exposedName: _lte
+          operatorName: <=
+        - exposedName: _gt
+          operatorName: ">"
+        - exposedName: _gte
+          operatorName: ">="
+        - exposedName: _lt
+          operatorName: <
+        - exposedName: _neq
+          operatorName: "!="
+        - exposedName: _like
+          operatorName: LIKE
+        - exposedName: _nlike
+          operatorName: NOT LIKE
+        - exposedName: _ilike
+          operatorName: ILIKE
+        - exposedName: _nilike
+          operatorName: NOT ILIKE
+        - exposedName: _similar
+          operatorName: SIMILAR TO
+        - exposedName: _nsimilar
+          operatorName: NOT SIMILAR TO
+        - exposedName: _neq
+          operatorName: <>
+        - exposedName: _like
+          operatorName: "~~"
+        - exposedName: _nlike
+          operatorName: "!~~"
+        - exposedName: _ilike
+          operatorName: "~~*"
+        - exposedName: _nilike
+          operatorName: "!~~*"
+        - exposedName: _regex
+          operatorName: "~"
+        - exposedName: _nregex
+          operatorName: "!~"
+        - exposedName: _iregex
+          operatorName: "~*"
+        - exposedName: _niregex
+          operatorName: "!~*"
+        excludedSchemas:
+        - information_schema
+        - pg_catalog
+        - tiger
+        - crdb_internal
+        - columnar
+        - columnar_internal
+        unqualifiedSchemas:
+        - public

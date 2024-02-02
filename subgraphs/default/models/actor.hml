@@ -1,0 +1,83 @@
+kind: ObjectType
+version: v1
+definition:
+  name: actor
+  graphql:
+    typeName: actor
+    inputTypeName: actorInput
+  fields:
+    - name: actor_id
+      type: int4!
+    - name: first_name
+      type: varchar!
+    - name: last_name
+      type: varchar!
+    - name: last_update
+      type: timestamp!
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: actor
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - actor_id
+          - first_name
+          - last_name
+          - last_update
+
+---
+kind: Model
+version: v1
+definition:
+  name: actor
+  objectType: actor
+  filterableFields:
+    - fieldName: actor_id
+      operators:
+        enableAll: true
+    - fieldName: first_name
+      operators:
+        enableAll: true
+    - fieldName: last_name
+      operators:
+        enableAll: true
+    - fieldName: last_update
+      operators:
+        enableAll: true
+  orderableFields:
+    - fieldName: actor_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: first_name
+      orderByDirections:
+        enableAll: true
+    - fieldName: last_name
+      orderByDirections:
+        enableAll: true
+    - fieldName: last_update
+      orderByDirections:
+        enableAll: true
+  arguments: []
+  graphql:
+    selectUniques: []
+    selectMany:
+      queryRootField: actor
+    filterExpressionType: actorBoolExp
+    orderByExpressionType: actorOrderBy
+  source:
+    collection: actor
+    dataConnectorName: pg_db
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: actor
+  permissions:
+    - role: admin
+      select:
+        filter: null

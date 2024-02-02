@@ -1,0 +1,86 @@
+kind: ObjectType
+version: v1
+definition:
+  name: playlist
+  graphql:
+    typeName: playlist
+    inputTypeName: playlistInput
+  fields:
+    - name: name
+      type: varchar
+    - name: playlist_id
+      type: int4!
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: playlist
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - playlist_id
+
+---
+kind: Model
+version: v1
+definition:
+  name: playlist
+  objectType: playlist
+  filterableFields:
+    - fieldName: name
+      operators:
+        enableAll: true
+    - fieldName: playlist_id
+      operators:
+        enableAll: true
+  orderableFields:
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: playlist_id
+      orderByDirections:
+        enableAll: true
+  arguments: []
+  graphql:
+    selectUniques:
+      - queryRootField: playlistByPlaylistId
+        uniqueIdentifier:
+          - playlist_id
+    selectMany:
+      queryRootField: playlist
+    filterExpressionType: playlistBoolExp
+    orderByExpressionType: playlistOrderBy
+  source:
+    collection: playlist
+    dataConnectorName: pg_db
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: playlist
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: playlist_tracks
+  source: playlist
+  target:
+    model:
+      relationshipType: Array
+      name: playlist_track
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: playlist_id
+      target:
+        modelField:
+          - fieldName: playlist_id

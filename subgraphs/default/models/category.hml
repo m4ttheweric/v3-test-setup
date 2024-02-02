@@ -1,0 +1,74 @@
+kind: ObjectType
+version: v1
+definition:
+  name: category
+  graphql:
+    typeName: category
+    inputTypeName: categoryInput
+  fields:
+    - name: category_id
+      type: int4!
+    - name: last_update
+      type: timestamp!
+    - name: name
+      type: varchar!
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: category
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - category_id
+          - last_update
+          - name
+
+---
+kind: Model
+version: v1
+definition:
+  name: category
+  objectType: category
+  filterableFields:
+    - fieldName: category_id
+      operators:
+        enableAll: true
+    - fieldName: last_update
+      operators:
+        enableAll: true
+    - fieldName: name
+      operators:
+        enableAll: true
+  orderableFields:
+    - fieldName: category_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: last_update
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+  arguments: []
+  graphql:
+    selectUniques: []
+    selectMany:
+      queryRootField: category
+    filterExpressionType: categoryBoolExp
+    orderByExpressionType: categoryOrderBy
+  source:
+    collection: category
+    dataConnectorName: pg_db
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: category
+  permissions:
+    - role: admin
+      select:
+        filter: null

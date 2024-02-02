@@ -1,0 +1,74 @@
+kind: ObjectType
+version: v1
+definition:
+  name: film_actor
+  graphql:
+    typeName: filmActor
+    inputTypeName: filmActorInput
+  fields:
+    - name: actor_id
+      type: int2!
+    - name: film_id
+      type: int2!
+    - name: last_update
+      type: timestamp!
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: film_actor
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - actor_id
+          - film_id
+          - last_update
+
+---
+kind: Model
+version: v1
+definition:
+  name: film_actor
+  objectType: film_actor
+  filterableFields:
+    - fieldName: actor_id
+      operators:
+        enableAll: true
+    - fieldName: film_id
+      operators:
+        enableAll: true
+    - fieldName: last_update
+      operators:
+        enableAll: true
+  orderableFields:
+    - fieldName: actor_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: film_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: last_update
+      orderByDirections:
+        enableAll: true
+  arguments: []
+  graphql:
+    selectUniques: []
+    selectMany:
+      queryRootField: filmActor
+    filterExpressionType: filmActorBoolExp
+    orderByExpressionType: filmActorOrderBy
+  source:
+    collection: film_actor
+    dataConnectorName: pg_db
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: film_actor
+  permissions:
+    - role: admin
+      select:
+        filter: null

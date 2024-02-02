@@ -1,0 +1,86 @@
+kind: ObjectType
+version: v1
+definition:
+  name: artist
+  graphql:
+    typeName: artist
+    inputTypeName: artistInput
+  fields:
+    - name: artist_id
+      type: int4!
+    - name: name
+      type: varchar
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: artist
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - artist_id
+          - name
+
+---
+kind: Model
+version: v1
+definition:
+  name: artist
+  objectType: artist
+  filterableFields:
+    - fieldName: artist_id
+      operators:
+        enableAll: true
+    - fieldName: name
+      operators:
+        enableAll: true
+  orderableFields:
+    - fieldName: artist_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+  arguments: []
+  graphql:
+    selectUniques:
+      - queryRootField: artistByArtistId
+        uniqueIdentifier:
+          - artist_id
+    selectMany:
+      queryRootField: artist
+    filterExpressionType: artistBoolExp
+    orderByExpressionType: artistOrderBy
+  source:
+    collection: artist
+    dataConnectorName: pg_db
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: artist
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: albums
+  source: artist
+  target:
+    model:
+      relationshipType: Array
+      name: album
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: artist_id
+      target:
+        modelField:
+          - fieldName: artist_id

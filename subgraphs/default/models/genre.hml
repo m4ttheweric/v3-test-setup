@@ -1,0 +1,86 @@
+kind: ObjectType
+version: v1
+definition:
+  name: genre
+  graphql:
+    typeName: genre
+    inputTypeName: genreInput
+  fields:
+    - name: genre_id
+      type: int4!
+    - name: name
+      type: varchar
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: genre
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - genre_id
+          - name
+
+---
+kind: Model
+version: v1
+definition:
+  name: genre
+  objectType: genre
+  filterableFields:
+    - fieldName: genre_id
+      operators:
+        enableAll: true
+    - fieldName: name
+      operators:
+        enableAll: true
+  orderableFields:
+    - fieldName: genre_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+  arguments: []
+  graphql:
+    selectUniques:
+      - queryRootField: genreByGenreId
+        uniqueIdentifier:
+          - genre_id
+    selectMany:
+      queryRootField: genre
+    filterExpressionType: genreBoolExp
+    orderByExpressionType: genreOrderBy
+  source:
+    collection: genre
+    dataConnectorName: pg_db
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: genre
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: tracks
+  source: genre
+  target:
+    model:
+      relationshipType: Array
+      name: track
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: genre_id
+      target:
+        modelField:
+          - fieldName: genre_id

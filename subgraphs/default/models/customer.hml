@@ -1,0 +1,203 @@
+kind: ObjectType
+version: v1
+definition:
+  name: customer
+  graphql:
+    typeName: customer
+    inputTypeName: customerInput
+  fields:
+    - name: address
+      type: varchar
+    - name: city
+      type: varchar
+    - name: company
+      type: varchar
+    - name: country
+      type: varchar
+    - name: customer_id
+      type: int4!
+    - name: email
+      type: varchar!
+    - name: fax
+      type: varchar
+    - name: first_name
+      type: varchar!
+    - name: last_name
+      type: varchar!
+    - name: phone
+      type: varchar
+    - name: postal_code
+      type: varchar
+    - name: state
+      type: varchar
+    - name: support_rep_id
+      type: int4
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: customer
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - address
+          - city
+          - company
+          - country
+          - customer_id
+          - email
+          - fax
+          - first_name
+          - last_name
+          - phone
+          - postal_code
+          - state
+          - support_rep_id
+
+---
+kind: Model
+version: v1
+definition:
+  name: customer
+  objectType: customer
+  filterableFields:
+    - fieldName: address
+      operators:
+        enableAll: true
+    - fieldName: city
+      operators:
+        enableAll: true
+    - fieldName: company
+      operators:
+        enableAll: true
+    - fieldName: country
+      operators:
+        enableAll: true
+    - fieldName: customer_id
+      operators:
+        enableAll: true
+    - fieldName: email
+      operators:
+        enableAll: true
+    - fieldName: fax
+      operators:
+        enableAll: true
+    - fieldName: first_name
+      operators:
+        enableAll: true
+    - fieldName: last_name
+      operators:
+        enableAll: true
+    - fieldName: phone
+      operators:
+        enableAll: true
+    - fieldName: postal_code
+      operators:
+        enableAll: true
+    - fieldName: state
+      operators:
+        enableAll: true
+    - fieldName: support_rep_id
+      operators:
+        enableAll: true
+  orderableFields:
+    - fieldName: address
+      orderByDirections:
+        enableAll: true
+    - fieldName: city
+      orderByDirections:
+        enableAll: true
+    - fieldName: company
+      orderByDirections:
+        enableAll: true
+    - fieldName: country
+      orderByDirections:
+        enableAll: true
+    - fieldName: customer_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: email
+      orderByDirections:
+        enableAll: true
+    - fieldName: fax
+      orderByDirections:
+        enableAll: true
+    - fieldName: first_name
+      orderByDirections:
+        enableAll: true
+    - fieldName: last_name
+      orderByDirections:
+        enableAll: true
+    - fieldName: phone
+      orderByDirections:
+        enableAll: true
+    - fieldName: postal_code
+      orderByDirections:
+        enableAll: true
+    - fieldName: state
+      orderByDirections:
+        enableAll: true
+    - fieldName: support_rep_id
+      orderByDirections:
+        enableAll: true
+  arguments: []
+  graphql:
+    selectUniques:
+      - queryRootField: customerByCustomerId
+        uniqueIdentifier:
+          - customer_id
+    selectMany:
+      queryRootField: customer
+    filterExpressionType: customerBoolExp
+    orderByExpressionType: customerOrderBy
+  source:
+    collection: customer
+    dataConnectorName: pg_db
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: customer
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: employee
+  source: customer
+  target:
+    model:
+      relationshipType: Object
+      name: employee
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: support_rep_id
+      target:
+        modelField:
+          - fieldName: employee_id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: invoices
+  source: customer
+  target:
+    model:
+      relationshipType: Array
+      name: invoice
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: customer_id
+      target:
+        modelField:
+          - fieldName: customer_id

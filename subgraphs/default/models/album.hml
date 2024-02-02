@@ -1,0 +1,113 @@
+kind: ObjectType
+version: v1
+definition:
+  name: album
+  graphql:
+    typeName: album
+    inputTypeName: albumInput
+  fields:
+    - name: album_id
+      type: int4!
+    - name: artist_id
+      type: int4!
+    - name: title
+      type: varchar!
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: album
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - album_id
+          - artist_id
+          - title
+
+---
+kind: Model
+version: v1
+definition:
+  name: album
+  objectType: album
+  filterableFields:
+    - fieldName: album_id
+      operators:
+        enableAll: true
+    - fieldName: artist_id
+      operators:
+        enableAll: true
+    - fieldName: title
+      operators:
+        enableAll: true
+  orderableFields:
+    - fieldName: album_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: artist_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: title
+      orderByDirections:
+        enableAll: true
+  arguments: []
+  graphql:
+    selectUniques:
+      - queryRootField: albumByAlbumId
+        uniqueIdentifier:
+          - album_id
+    selectMany:
+      queryRootField: album
+    filterExpressionType: albumBoolExp
+    orderByExpressionType: albumOrderBy
+  source:
+    collection: album
+    dataConnectorName: pg_db
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: album
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: artist
+  source: album
+  target:
+    model:
+      relationshipType: Object
+      name: artist
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: artist_id
+      target:
+        modelField:
+          - fieldName: artist_id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: tracks
+  source: album
+  target:
+    model:
+      relationshipType: Array
+      name: track
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: album_id
+      target:
+        modelField:
+          - fieldName: album_id

@@ -1,0 +1,105 @@
+kind: ObjectType
+version: v1
+definition:
+  name: playlist_track
+  graphql:
+    typeName: playlistTrack
+    inputTypeName: playlistTrackInput
+  fields:
+    - name: playlist_id
+      type: int4!
+    - name: track_id
+      type: int4!
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: playlist_track
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - playlist_id
+          - track_id
+
+---
+kind: Model
+version: v1
+definition:
+  name: playlist_track
+  objectType: playlist_track
+  filterableFields:
+    - fieldName: playlist_id
+      operators:
+        enableAll: true
+    - fieldName: track_id
+      operators:
+        enableAll: true
+  orderableFields:
+    - fieldName: playlist_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: track_id
+      orderByDirections:
+        enableAll: true
+  arguments: []
+  graphql:
+    selectUniques:
+      - queryRootField: pkPlaylistTrack
+        uniqueIdentifier:
+          - playlist_id
+          - track_id
+    selectMany:
+      queryRootField: playlistTrack
+    filterExpressionType: playlistTrackBoolExp
+    orderByExpressionType: playlistTrackOrderBy
+  source:
+    collection: playlist_track
+    dataConnectorName: pg_db
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: playlist_track
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: playlist
+  source: playlist_track
+  target:
+    model:
+      relationshipType: Object
+      name: playlist
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: playlist_id
+      target:
+        modelField:
+          - fieldName: playlist_id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: track
+  source: playlist_track
+  target:
+    model:
+      relationshipType: Object
+      name: track
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: track_id
+      target:
+        modelField:
+          - fieldName: track_id
